@@ -17,7 +17,6 @@ import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -77,13 +76,17 @@ class PocketFragment : Fragment(), View.OnClickListener {
     ) {
         Log.d("FragmentCheck", "PocketFragment loaded")
         // 設定 Toolbar 為 ActionBar
-setHasOptionsMenu(true)
+        setHasOptionsMenu(true)
         viewModel.getuniCity()
         initView()
         initParam()
     }
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.option_menu, menu)  // 你的 menu 資源檔
+
+    override fun onCreateOptionsMenu(
+        menu: Menu,
+        inflater: MenuInflater,
+    ) {
+        inflater.inflate(R.menu.option_menu, menu) // 你的 menu 資源檔
         super.onCreateOptionsMenu(menu, inflater)
     }
 

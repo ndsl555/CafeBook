@@ -7,6 +7,8 @@ plugins {
     id("com.google.devtools.ksp") version "2.2.0-2.0.2"
 }
 
+val mapsApiKey: String by project
+
 android {
     namespace = "com.example.cafebook"
     compileSdk = 36
@@ -19,6 +21,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders += mapOf("MAPS_API_KEY" to (project.findProperty("MAPS_API_KEY") ?: ""))
     }
 
     buildTypes {

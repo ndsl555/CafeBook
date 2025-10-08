@@ -17,7 +17,7 @@
         android:theme="@style/Theme.Cafe">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_NEW_KEY_PLACEHOLDER" />
+            android:value="${MAPS_API_KEY}" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
