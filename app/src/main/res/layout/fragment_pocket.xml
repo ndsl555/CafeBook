@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayoutPocket"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PocketFragment">
+
+    <!-- The main content view -->
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:background="@color/E"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".PocketFragment"
+            android:orientation="vertical">
+
+            <!-- Your main content goes here, including the RecyclerView -->
+            <!-- Add SearchView here -->
+            <!--androidx.appcompat.widget.SearchView
+                android:background="@color/gray"
+                android:id="@+id/searchViewPocket"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:iconifiedByDefault="false"
+                android:queryHint="Search for a store" -->
+
+            <!-- RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewPocket"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <!-- FloatingActionButton for clearing all data -->
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:backgroundTint="@color/G"
+                android:id="@+id/fabClearAllData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="16dp"
+                android:contentDescription="Clear All Data"
+                app:layout_anchor="@id/recyclerView"
+                app:layout_anchorGravity="bottom|end"
+                android:elevation="12dp"/>
+
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <!-- The navigation drawer -->
+    <LinearLayout
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:orientation="vertical"
+        android:background="@android:color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <Spinner
+                android:backgroundTint="@color/E"
+                android:popupBackground="@color/E"
+                android:id="@+id/citySpinnerPocket"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+            </Spinner>
+        </LinearLayout>
+
+        <!-- WiFi SeekBar -->
+        <LinearLayout
+            android:background="@color/D"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/wifivaluePocket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="網路">
+            </TextView>
+
+            <SeekBar
+                android:id="@+id/seekBarWifiPocket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:padding="16dp"
+                android:max="5"
+                android:progress="50"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+
+        <!-- Seat SeekBar -->
+        <LinearLayout
+            android:background="@color/D"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/seatvaluePocket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="座位">
+            </TextView>
+
+            <SeekBar
+                android:id="@+id/seekBarSeatPocket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:padding="16dp"
+                android:max="5"
+                android:progress="50"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+
+        <!-- Quietness SeekBar -->
+        <LinearLayout
+            android:background="@color/D"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/quietvaluePocket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="安靜">
+            </TextView>
+
+            <SeekBar
+                android:id="@+id/seekBarQuietPocket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:padding="16dp"
+                android:max="5"
+                android:progress="50"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+
+        <!-- Tasty SeekBar -->
+        <LinearLayout
+            android:background="@color/D"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/tastyvaluePocket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="好喝">
+            </TextView>
+
+            <SeekBar
+                android:id="@+id/seekBarTastyPocket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:padding="16dp"
+                android:max="5"
+                android:progress="50"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+
+        <!-- Cheapness SeekBar -->
+        <LinearLayout
+            android:background="@color/D"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/cheapvaluePocket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="便宜">
+            </TextView>
+
+            <SeekBar
+                android:id="@+id/seekBarCheapPocket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:padding="16dp"
+                android:max="5"
+                android:progress="50"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+
+        <!-- Music SeekBar -->
+        <LinearLayout
+            android:background="@color/D"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/musicvaluePocket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="音樂">
+            </TextView>
+
+            <SeekBar
+                android:id="@+id/seekBarMusicPocket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:padding="16dp"
+                android:max="5"
+                android:progress="50"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+
+        <!-- Add other UI elements as needed -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@color/B"
+            android:textStyle="bold"
+            android:id="@+id/buttonApplyPocket"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="篩選"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@color/B"
+            android:textStyle="bold"
+            android:id="@+id/buttonClearPocket"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="清除"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+    </LinearLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

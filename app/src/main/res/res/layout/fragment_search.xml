@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- ProgressBar added here -->
+
+    <!-- The main content view -->
+    <LinearLayout
+        android:background="@color/E"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".SearchFragment"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+        <!-- Your main content goes here, including the RecyclerView -->
+        <!-- Add SearchView here -->
+        <androidx.appcompat.widget.SearchView
+            android:background="@color/gray"
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:iconifiedByDefault="false"
+            android:queryHint="Search for a store" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <!-- The navigation drawer -->
+    <LinearLayout
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:orientation="vertical"
+        android:background="@android:color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <Spinner
+                android:backgroundTint="@color/E"
+                android:popupBackground="@color/E"
+                android:id="@+id/citySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+
+        <!-- SeekBar and TextView for WiFi -->
+        <LinearLayout
+            android:background="@color/D"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/wifivalue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="網路">
+            </TextView>
+
+            <SeekBar
+                android:id="@+id/seekBarWifi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:padding="16dp"
+                android:max="5"
+                android:progress="50"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+
+        <!-- SeekBar and TextView for Seat -->
+        <LinearLayout
+            android:background="@color/D"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/seatvalue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="座位">
+            </TextView>
+
+            <SeekBar
+                android:id="@+id/seekBarSeat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:padding="16dp"
+                android:max="5"
+                android:progress="50"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+
+        <!-- SeekBar and TextView for Quiet -->
+        <LinearLayout
+            android:background="@color/D"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/quietvalue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="安靜">
+            </TextView>
+
+            <SeekBar
+                android:id="@+id/seekBarQuiet"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:padding="16dp"
+                android:max="5"
+                android:progress="50"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+
+        <!-- SeekBar and TextView for Tasty -->
+        <LinearLayout
+            android:background="@color/D"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/tastyvalue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="好喝">
+            </TextView>
+
+            <SeekBar
+                android:id="@+id/seekBarTasty"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:padding="16dp"
+                android:max="5"
+                android:progress="50"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+
+        <!-- SeekBar and TextView for Cheap -->
+        <LinearLayout
+            android:background="@color/D"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/cheapvalue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="便宜">
+            </TextView>
+
+            <SeekBar
+                android:id="@+id/seekBarCheap"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:padding="16dp"
+                android:max="5"
+                android:progress="50"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+
+        <!-- SeekBar and TextView for Music -->
+        <LinearLayout
+            android:background="@color/D"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/musicvalue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="音樂">
+            </TextView>
+
+            <SeekBar
+                android:id="@+id/seekBarMusic"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:padding="16dp"
+                android:max="5"
+                android:progress="50"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@color/B"
+            android:id="@+id/buttonApply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="篩選"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonClear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="清除"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/B" />
+    </LinearLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_home_graph"
+    app:startDestination="@id/navigationSearchFragment">
+
+    <fragment
+        android:id="@+id/navigationSearchFragment"
+        android:name="com.example.cafebook.SearchFragment"
+        tools:layout="@layout/fragment_search"
+
+        />
+
+    <fragment
+        android:id="@+id/navigationNearFragment"
+        android:name="com.example.cafebook.NearFragment"
+        tools:layout="@layout/fragment_near"
+
+        />
+    <fragment
+        android:id="@+id/navigationBarCodeFragment"
+        android:name="com.example.cafebook.BarCodeFragment"
+        tools:layout="@layout/fragment_barcode"
+
+        />
+    <fragment
+        android:id="@+id/navigationPocketFragment"
+        android:name="com.example.cafebook.PocketFragment"
+        tools:layout="@layout/fragment_pocket"
+
+        />
+    <action
+        android:id="@+id/action_global_to_navigationSearchFragment"
+        app:destination="@id/navigationSearchFragment"
+        app:enterAnim="@anim/nav_push_from_right_in"
+        app:exitAnim="@anim/nav_push_from_left_out"
+        app:popEnterAnim="@anim/nav_push_from_left_in"
+        app:popExitAnim="@anim/nav_push_from_right_out">
+
+    </action>
+
+    <action
+        android:id="@+id/action_global_to_navigationNearFragment"
+        app:destination="@id/navigationNearFragment"
+        app:enterAnim="@anim/nav_push_from_right_in"
+        app:exitAnim="@anim/nav_push_from_left_out"
+        app:popEnterAnim="@anim/nav_push_from_left_in"
+        app:popExitAnim="@anim/nav_push_from_right_out">
+
+    </action>
+    <action
+        android:id="@+id/action_global_to_navigationBarCodeFragment"
+        app:destination="@id/navigationBarCodeFragment"
+        app:enterAnim="@anim/nav_push_from_right_in"
+        app:exitAnim="@anim/nav_push_from_left_out"
+        app:popEnterAnim="@anim/nav_push_from_left_in"
+        app:popExitAnim="@anim/nav_push_from_right_out">
+
+    </action>
+    <action
+        android:id="@+id/action_global_to_navigationPocketFragment"
+        app:destination="@id/navigationPocketFragment"
+        app:enterAnim="@anim/nav_push_from_right_in"
+        app:exitAnim="@anim/nav_push_from_left_out"
+        app:popEnterAnim="@anim/nav_push_from_left_in"
+        app:popExitAnim="@anim/nav_push_from_right_out">
+
+    </action>
+
+
+</navigation>

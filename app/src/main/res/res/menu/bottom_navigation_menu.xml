@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_search"
+        android:title="店家搜搜"
+        android:icon="@drawable/baseline_search_24"
+         />
+    <item
+        android:id="@+id/nav_map"
+        android:title="鄰近店家"
+        android:icon="@drawable/baseline_fmd_good_24"/>
+    <item
+        android:id="@+id/nav_barcode"
+        android:title="條碼載具"
+        android:icon="@drawable/baseline_document_scanner_24"
+         />
+    <item
+        android:id="@+id/nav_pocket"
+        android:title="口袋名單"
+        android:icon="@drawable/baseline_playlist_add_check_24"
+         />
+</menu>

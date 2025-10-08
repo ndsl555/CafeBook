@@ -1,0 +1,21 @@
+<!-- res/layout/marker_info_window.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tvCafeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cafe Name"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/ivNavigation"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:src="@drawable/baseline_search_24"
+        android:contentDescription="Navigation Icon" />
+</LinearLayout>
