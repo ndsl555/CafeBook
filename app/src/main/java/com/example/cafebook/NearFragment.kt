@@ -15,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -37,9 +38,11 @@ class NearFragment : Fragment() {
     private var googleMap: GoogleMap? = null
     private lateinit var progressBar: ProgressBar
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var distanceSeekBar: SeekBar
 
     private val viewModel: NearViewModel by viewModel()
 
+    private var distanceLimit = 1000 // 公尺範圍
     private val LOCATION_PERMISSION_REQUEST_CODE = 1001
     private var currentLatLng: LatLng = LatLng(0.0, 0.0)
     private var cafes: List<CafeShopEntity> = emptyList()
@@ -51,6 +54,7 @@ class NearFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_near, container, false)
 
+        distanceSeekBar = view.findViewById(R.id.distanceSeekBar)
         progressBar = view.findViewById(R.id.progressBarNear)
         mapView = view.findViewById(R.id.mapViewNear)
         mapView.onCreate(savedInstanceState)
@@ -60,7 +64,7 @@ class NearFragment : Fragment() {
         progressBar.indeterminateDrawable = drawable
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-
+        setupSeekBars()
         observeViewModel()
 
         mapView.getMapAsync { map ->
@@ -71,6 +75,25 @@ class NearFragment : Fragment() {
         return view
     }
 
+    private fun setupSeekBars() {
+        distanceSeekBar.setOnSeekBarChangeListener(seekBarListener {viewModel.setDistanceLimit(it)})
+    }
+
+    private fun seekBarListener(onChange: (Int) -> Unit): SeekBar.OnSeekBarChangeListener {
+        return object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(
+                seekBar: SeekBar?,
+                progress: Int,
+                fromUser: Boolean,
+            ) {
+                onChange(progress)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        }
+    }
     private fun observeViewModel() {
         launchAndRepeatWithViewLifecycle {
             launch {
@@ -82,6 +105,12 @@ class NearFragment : Fragment() {
                     }
 
                     cafes = state.cafes
+                    addMarkersToMap()
+                }
+            }
+            launch {
+                viewModel.distanceLimit.collect {
+                    distanceLimit = it
                     addMarkersToMap()
                 }
             }
@@ -143,7 +172,6 @@ class NearFragment : Fragment() {
         addCurrentLocationMarker()
 
         val center = currentLatLng ?: return
-        val distanceLimit = 1000 // 公尺範圍
 
         cafes.forEach { cafe ->
             val lat = cafe.latitude

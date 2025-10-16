@@ -2,6 +2,7 @@ package com.example.cafe
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cafebook.Entity.CafeShopEntity
 import com.example.cafebook.UseCase.CafeApiUseCase
 import com.example.cafebook.Utils.Result
 import com.example.cafebook.Utils.invoke
@@ -18,10 +19,16 @@ class NearViewModel(
     private val _uiState = MutableStateFlow(CafeUiState())
     val uiState: StateFlow<CafeUiState> = _uiState.asStateFlow()
 
+    private val _distanceLimit = MutableStateFlow(1000)
+    val distanceLimit: StateFlow<Int> = _distanceLimit.asStateFlow()
+
+
     init {
         fetchCafeData()
     }
-
+    fun setDistanceLimit(value: Int) {
+        _distanceLimit.value = value
+    }
     fun fetchCafeData() {
         _uiState.update { it.copy(isLoading = true, errorMessage = null) }
 
