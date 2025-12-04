@@ -16,7 +16,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cafebook.Entity.CafeShopEntity
@@ -157,7 +156,6 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupFilters() {
-        // 城市中英文對照 Map
         val cityNameMap =
             mapOf(
                 "taipei" to "台北",
@@ -182,58 +180,59 @@ class SearchFragment : Fragment() {
                 "lienchiang" to "連江",
             )
 
-        // Spinner - 城市 (中英文對照)
-        lifecycleScope.launch {
+        launchAndRepeatWithViewLifecycle {
             viewModel.uiState.collect { state ->
-                val originalCities = state.cities.sorted()
-                val cities = listOf(null) + originalCities
-                val displayCities = listOf("全部") + originalCities.map { cityNameMap[it] ?: it }
+                _binding?.let { binding ->
+                    // Spinner 城市
+                    val originalCities = state.cities.sorted()
+                    val cities = listOf(null) + originalCities
+                    val displayCities = listOf("全部") + originalCities.map { cityNameMap[it] ?: it }
 
-                val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, displayCities)
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                binding.citySpinner.adapter = adapter
+                    val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, displayCities)
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    binding.citySpinner.adapter = adapter
 
-                binding.citySpinner.onItemSelectedListener =
-                    object : AdapterView.OnItemSelectedListener {
-                        override fun onItemSelected(
-                            parent: AdapterView<*>?,
-                            view: View?,
-                            position: Int,
-                            id: Long,
-                        ) {
-                            val selectedCity = cities[position] // null or "taipei", etc.
-                            viewModel.setCity(selectedCity)
+                    binding.citySpinner.onItemSelectedListener =
+                        object : AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(
+                                parent: AdapterView<*>?,
+                                view: View?,
+                                position: Int,
+                                id: Long,
+                            ) {
+                                val selectedCity = cities[position] // null 或城市英文名
+                                viewModel.setCity(selectedCity)
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>?) {}
                         }
 
-                        override fun onNothingSelected(parent: AdapterView<*>?) {}
+                    // SeekBar
+                    binding.seekBarWifi.setOnSeekBarChangeListener(seekBarListener { viewModel.setWifiThreshold(it) })
+                    binding.seekBarSeat.setOnSeekBarChangeListener(seekBarListener { viewModel.setSeatThreshold(it) })
+                    binding.seekBarQuiet.setOnSeekBarChangeListener(seekBarListener { viewModel.setQuietThreshold(it) })
+                    binding.seekBarTasty.setOnSeekBarChangeListener(seekBarListener { viewModel.setTastyThreshold(it) })
+                    binding.seekBarCheap.setOnSeekBarChangeListener(seekBarListener { viewModel.setCheapThreshold(it) })
+                    binding.seekBarMusic.setOnSeekBarChangeListener(seekBarListener { viewModel.setMusicThreshold(it) })
+
+                    // 篩選按鈕
+                    binding.buttonApply.setOnClickListener {
+                        binding.drawerLayout.closeDrawers()
                     }
+
+                    // 清除按鈕
+                    binding.buttonClear.setOnClickListener {
+                        binding.seekBarWifi.progress = 0
+                        binding.seekBarSeat.progress = 0
+                        binding.seekBarQuiet.progress = 0
+                        binding.seekBarTasty.progress = 0
+                        binding.seekBarCheap.progress = 0
+                        binding.seekBarMusic.progress = 0
+                        binding.citySpinner.setSelection(0)
+                        viewModel.setSearchQuery("")
+                    }
+                }
             }
-        }
-
-        // SeekBars (設定各項 threshold)
-        binding.seekBarWifi.setOnSeekBarChangeListener(seekBarListener { viewModel.setWifiThreshold(it) })
-        binding.seekBarSeat.setOnSeekBarChangeListener(seekBarListener { viewModel.setSeatThreshold(it) })
-        binding.seekBarQuiet.setOnSeekBarChangeListener(seekBarListener { viewModel.setQuietThreshold(it) })
-        binding.seekBarTasty.setOnSeekBarChangeListener(seekBarListener { viewModel.setTastyThreshold(it) })
-        binding.seekBarCheap.setOnSeekBarChangeListener(seekBarListener { viewModel.setCheapThreshold(it) })
-        binding.seekBarMusic.setOnSeekBarChangeListener(seekBarListener { viewModel.setMusicThreshold(it) })
-
-        // 篩選按鈕：關閉 Drawer
-        binding.buttonApply.setOnClickListener {
-            Log.d("SearchFragment", "Apply button clicked")
-            binding.drawerLayout.closeDrawers()
-        }
-
-        // 清除按鈕：重置所有條件
-        binding.buttonClear.setOnClickListener {
-            binding.seekBarWifi.progress = 0
-            binding.seekBarSeat.progress = 0
-            binding.seekBarQuiet.progress = 0
-            binding.seekBarTasty.progress = 0
-            binding.seekBarCheap.progress = 0
-            binding.seekBarMusic.progress = 0
-            binding.citySpinner.setSelection(0)
-            viewModel.setSearchQuery("")
         }
     }
 

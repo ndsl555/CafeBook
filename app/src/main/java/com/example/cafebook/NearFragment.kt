@@ -76,7 +76,7 @@ class NearFragment : Fragment() {
     }
 
     private fun setupSeekBars() {
-        distanceSeekBar.setOnSeekBarChangeListener(seekBarListener {viewModel.setDistanceLimit(it)})
+        distanceSeekBar.setOnSeekBarChangeListener(seekBarListener { viewModel.setDistanceLimit(it) })
     }
 
     private fun seekBarListener(onChange: (Int) -> Unit): SeekBar.OnSeekBarChangeListener {
@@ -94,6 +94,7 @@ class NearFragment : Fragment() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         }
     }
+
     private fun observeViewModel() {
         launchAndRepeatWithViewLifecycle {
             launch {

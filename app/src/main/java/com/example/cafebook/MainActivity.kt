@@ -1,24 +1,15 @@
 package com.example.cafebook
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
-import androidx.savedstate.SavedState
 import com.example.cafebook.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.MainScope
 
 class MainActivity :
-    AppCompatActivity(),
-    NavController.OnDestinationChangedListener,
-    View.OnClickListener,
-    CoroutineScope by MainScope() {
+    AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,18 +50,6 @@ class MainActivity :
             }
             return@setOnItemSelectedListener true
         }
-    }
-
-    override fun onDestinationChanged(
-        controller: NavController,
-        destination: NavDestination,
-        arguments: SavedState?,
-    ) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onClick(p0: View?) {
-        TODO("Not yet implemented")
     }
 }
 
