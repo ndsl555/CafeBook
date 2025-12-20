@@ -1,10 +1,13 @@
 package com.example.cafebook
 
-import android.app.AlertDialog
+import android.app.Dialog
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import com.example.cafe.ViewModels.BarcodeViewModel
 import com.example.cafebook.databinding.FragmentBarcodeBinding
@@ -57,25 +60,25 @@ class BarCodeFragment : Fragment() {
     }
 
     private fun showInputDialog() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("輸入字串")
+        val dialogBinding = layoutInflater.inflate(R.layout.dialog_barcode, null)
+        val dialog =
+            Dialog(requireContext()).apply {
+                setContentView(dialogBinding)
+                setCancelable(true)
+                window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+            }
 
-        val input = EditText(requireContext())
-        builder.setView(input)
-
-        builder.setPositiveButton("確定") { _, _ ->
-            val text = input.text.toString()
+        dialogBinding.findViewById<Button>(R.id.buttonlimit).setOnClickListener {
+            val text = dialogBinding.findViewById<EditText>(R.id.editTextlimit).text.toString()
             if (text.isNotBlank()) {
                 viewModel.saveBarcode(text)
-                Toast.makeText(requireContext(), "已保存", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+                Toast.makeText(requireContext(), getString(R.string.saved), Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(requireContext(), "未輸入", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.not_entered), Toast.LENGTH_SHORT).show()
             }
         }
-
-        builder.setNegativeButton("取消") { dialog, _ -> dialog.dismiss() }
-
-        builder.show()
+        dialog.show()
     }
 
     override fun onDestroyView() {

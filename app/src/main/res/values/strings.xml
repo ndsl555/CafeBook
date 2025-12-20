@@ -2,4 +2,13 @@
     <string name="app_name">躁咖</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="saved">已保存</string>
+    <string name="not_entered">未輸入</string>
+    <string name="confirm">確定</string>
+    <string name="enter_barcode_hint">輸入載具</string>
+    <string name="barcode_fragment_title">條碼載具</string>
+    <string name="network_type_wifi">WiFi</string>
+    <string name="network_type_mobile">Mobile</string>
+    <string name="network_type_no_network">請檢察網路連線狀態</string>
+    <string name="yes">知道了</string>
 </resources>

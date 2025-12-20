@@ -1,12 +1,19 @@
 package com.example.cafebook
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
+import com.example.cafebook.Utils.NetworkUtils
+import com.example.cafebook.Utils.NetworkUtils.getNetworkType
+import com.example.cafebook.Utils.NetworkUtils.isNetworkConnected
 import com.example.cafebook.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.launch
 
 class MainActivity :
     AppCompatActivity() {
@@ -16,7 +23,55 @@ class MainActivity :
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        checkNetworkStatus()
+        observeNetworkState()
         initView()
+    }
+
+    private fun observeNetworkState() {
+        lifecycleScope.launch {
+            NetworkUtils.networkState.collect { isConnected ->
+                if (isConnected) {
+                    // 網路恢复
+                    showNetworkRestored()
+                } else {
+                    // 網路斷開
+                    showNetworkLost()
+                }
+            }
+        }
+    }
+
+    private fun showNetworkRestored() {
+        // 显示網路恢复提示
+        Toast.makeText(this, "網路已恢复", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showNetworkLost() {
+        // 显示網路斷開提示
+        showNoWifiDialog()
+        Toast.makeText(this, "網路已斷開", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun checkNetworkStatus() {
+        if (isNetworkConnected(baseContext)) {
+            val networkType = getNetworkType(baseContext)
+            println("網路已連接 - $networkType")
+        } else {
+            showNoWifiDialog()
+            Toast.makeText(this, "網路未連接", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showNoWifiDialog() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(getString(android.R.string.dialog_alert_title))
+            .setMessage(getString(R.string.network_type_no_network))
+            .setCancelable(false)
+            .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun initView() {
@@ -30,7 +85,6 @@ class MainActivity :
 
             when (it.itemId) {
                 R.id.nav_search -> {
-                    Log.d("FragmentCheck", "SFragment navigationPocketFragment")
                     navController.navigate(NavHomeGraphDirections.actionGlobalToNavigationSearchFragment())
                 }
 
@@ -43,8 +97,6 @@ class MainActivity :
                 }
 
                 R.id.nav_pocket -> {
-                    Log.d("FragmentCheck", "PocketFragment navigationPocketFragment")
-
                     navController.navigate(NavHomeGraphDirections.actionGlobalToNavigationPocketFragment())
                 }
             }
