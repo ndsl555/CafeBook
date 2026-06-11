@@ -26,6 +26,14 @@ class PocketViewModel(
     private val _cheap = MutableStateFlow(0)
     private val _music = MutableStateFlow(0)
 
+    val city = _city.asStateFlow()
+    val wifi = _wifi.asStateFlow()
+    val seat = _seat.asStateFlow()
+    val quiet = _quiet.asStateFlow()
+    val tasty = _tasty.asStateFlow()
+    val cheap = _cheap.asStateFlow()
+    val music = _music.asStateFlow()
+
     private val _bag = MutableStateFlow<CafeAverages>(CafeAverages(0.0, 0.0, 0.0, 0.0, 0.0, 0.0))
     val bag: StateFlow<CafeAverages> = _bag.asStateFlow()
 
@@ -40,39 +48,22 @@ class PocketViewModel(
         getAverage()
     }
 
-    // 各 setter：更新值後馬上觸發查詢
-    fun setCity(city: String?) {
+    fun updateFilters(
+        city: String?,
+        wifi: Int,
+        seat: Int,
+        quiet: Int,
+        tasty: Int,
+        cheap: Int,
+        music: Int,
+    ) {
         _city.value = city
-        triggerFilter()
-    }
-
-    fun setWifi(value: Int) {
-        _wifi.value = value
-        triggerFilter()
-    }
-
-    fun setSeat(value: Int) {
-        _seat.value = value
-        triggerFilter()
-    }
-
-    fun setQuiet(value: Int) {
-        _quiet.value = value
-        triggerFilter()
-    }
-
-    fun setTasty(value: Int) {
-        _tasty.value = value
-        triggerFilter()
-    }
-
-    fun setCheap(value: Int) {
-        _cheap.value = value
-        triggerFilter()
-    }
-
-    fun setMusic(value: Int) {
-        _music.value = value
+        _wifi.value = wifi
+        _seat.value = seat
+        _quiet.value = quiet
+        _tasty.value = tasty
+        _cheap.value = cheap
+        _music.value = music
         triggerFilter()
     }
 

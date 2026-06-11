@@ -27,6 +27,14 @@ class SearchViewModel(
     private val _cheapThreshold = MutableStateFlow(0)
     private val _musicThreshold = MutableStateFlow(0)
 
+    val selectedCity = _selectedCity.asStateFlow()
+    val wifiThreshold = _wifiThreshold.asStateFlow()
+    val seatThreshold = _seatThreshold.asStateFlow()
+    val quietThreshold = _quietThreshold.asStateFlow()
+    val tastyThreshold = _tastyThreshold.asStateFlow()
+    val cheapThreshold = _cheapThreshold.asStateFlow()
+    val musicThreshold = _musicThreshold.asStateFlow()
+
     init {
         fetchCafeData()
     }
@@ -66,32 +74,33 @@ class SearchViewModel(
         _searchQuery.value = query
     }
 
-    fun setCity(city: String?) {
+    fun updateFilters(
+        city: String?,
+        wifi: Int,
+        seat: Int,
+        quiet: Int,
+        tasty: Int,
+        cheap: Int,
+        music: Int,
+    ) {
         _selectedCity.value = city
+        _wifiThreshold.value = wifi
+        _seatThreshold.value = seat
+        _quietThreshold.value = quiet
+        _tastyThreshold.value = tasty
+        _cheapThreshold.value = cheap
+        _musicThreshold.value = music
     }
 
-    fun setWifiThreshold(value: Int) {
-        _wifiThreshold.value = value
-    }
-
-    fun setSeatThreshold(value: Int) {
-        _seatThreshold.value = value
-    }
-
-    fun setQuietThreshold(value: Int) {
-        _quietThreshold.value = value
-    }
-
-    fun setTastyThreshold(value: Int) {
-        _tastyThreshold.value = value
-    }
-
-    fun setCheapThreshold(value: Int) {
-        _cheapThreshold.value = value
-    }
-
-    fun setMusicThreshold(value: Int) {
-        _musicThreshold.value = value
+    fun resetFilters() {
+        _selectedCity.value = null
+        _wifiThreshold.value = 0
+        _seatThreshold.value = 0
+        _quietThreshold.value = 0
+        _tastyThreshold.value = 0
+        _cheapThreshold.value = 0
+        _musicThreshold.value = 0
+        _searchQuery.value = ""
     }
 
     // 一個 combine 運算把所有篩選條件與原始的 cafes 結合，產生 UI 要顯示的 filteredList
