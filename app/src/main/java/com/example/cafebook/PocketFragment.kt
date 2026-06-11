@@ -318,7 +318,10 @@ class PocketFragment : Fragment(), View.OnClickListener {
                 clearDB()
             }
 
-            R.id.buttonApplyPocket -> binding.drawerLayoutPocket.closeDrawers()
+            R.id.buttonApplyPocket -> {
+                viewModel.triggerFilter()
+                binding.drawerLayoutPocket.closeDrawers()
+            }
             R.id.buttonClearPocket -> reset()
         }
     }

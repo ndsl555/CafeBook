@@ -40,40 +40,33 @@ class PocketViewModel(
         getAverage()
     }
 
-    // 各 setter：更新值後馬上觸發查詢
+    // 各 setter：僅更新值，不觸發查詢
     fun setCity(city: String?) {
         _city.value = city
-        triggerFilter()
     }
 
     fun setWifi(value: Int) {
         _wifi.value = value
-        triggerFilter()
     }
 
     fun setSeat(value: Int) {
         _seat.value = value
-        triggerFilter()
     }
 
     fun setQuiet(value: Int) {
         _quiet.value = value
-        triggerFilter()
     }
 
     fun setTasty(value: Int) {
         _tasty.value = value
-        triggerFilter()
     }
 
     fun setCheap(value: Int) {
         _cheap.value = value
-        triggerFilter()
     }
 
     fun setMusic(value: Int) {
         _music.value = value
-        triggerFilter()
     }
 
     fun clearFilters() {
@@ -87,7 +80,7 @@ class PocketViewModel(
         triggerFilter()
     }
 
-    private fun triggerFilter() {
+    fun triggerFilter() {
         viewModelScope.launch {
             val params =
                 FilterParams(

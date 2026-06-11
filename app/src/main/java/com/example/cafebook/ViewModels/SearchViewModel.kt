@@ -10,6 +10,17 @@ import com.example.cafebook.Utils.invoke
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
+// 定義篩選條件的封裝類別
+data class FilterCriteria(
+    val city: String? = null,
+    val wifi: Int = 0,
+    val seat: Int = 0,
+    val quiet: Int = 0,
+    val tasty: Int = 0,
+    val cheap: Int = 0,
+    val music: Int = 0,
+)
+
 class SearchViewModel(
     private val addCafeToPocketUseCase: AddCafeToPocketUseCase,
     private val cafeApiUseCase: CafeApiUseCase,
@@ -19,6 +30,8 @@ class SearchViewModel(
 
     // 篩選條件
     private val _searchQuery = MutableStateFlow<String>("")
+
+    // 暫存的篩選條件 (UI Slider 調整時更新這些變數，但不會立即觸發過濾)
     private val _selectedCity = MutableStateFlow<String?>(null)
     private val _wifiThreshold = MutableStateFlow(0)
     private val _seatThreshold = MutableStateFlow(0)
@@ -26,6 +39,9 @@ class SearchViewModel(
     private val _tastyThreshold = MutableStateFlow(0)
     private val _cheapThreshold = MutableStateFlow(0)
     private val _musicThreshold = MutableStateFlow(0)
+
+    // 3. 真正應用於清單過濾的條件 (按下篩選按鈕後才更新)
+    private val _appliedFilters = MutableStateFlow(FilterCriteria())
 
     init {
         fetchCafeData()
@@ -61,11 +77,12 @@ class SearchViewModel(
         }
     }
 
-    // 更新篩選條件的方法
+    // 更新搜尋文字 (即時反應到 filteredCafes)
     fun setSearchQuery(query: String) {
         _searchQuery.value = query
     }
 
+    // 更新暫存條件的方法 (Slider 調整時呼叫)
     fun setCity(city: String?) {
         _selectedCity.value = city
     }
@@ -94,39 +111,36 @@ class SearchViewModel(
         _musicThreshold.value = value
     }
 
-    // 一個 combine 運算把所有篩選條件與原始的 cafes 結合，產生 UI 要顯示的 filteredList
+    // 當按下「篩選」按鈕時呼叫，將目前的暫存值套用到正式篩選器中
+    fun applyFilters() {
+        _appliedFilters.value =
+            FilterCriteria(
+                city = _selectedCity.value,
+                wifi = _wifiThreshold.value,
+                seat = _seatThreshold.value,
+                quiet = _quietThreshold.value,
+                tasty = _tastyThreshold.value,
+                cheap = _cheapThreshold.value,
+                music = _musicThreshold.value,
+            )
+    }
+
+    // 結合「原始資料」、「即時搜尋文字」與「已應用的 Slider 篩選條件」
     val filteredCafes: StateFlow<List<CafeShopEntity>> =
         combine(
             _uiState.map { it.cafes },
             _searchQuery,
-            _selectedCity,
-            _wifiThreshold,
-            _seatThreshold,
-            _quietThreshold,
-            _tastyThreshold,
-            _cheapThreshold,
-            _musicThreshold,
-        ) { values: Array<Any?> ->
-
-            val cafes = values[0] as List<CafeShopEntity>
-            val q = values[1] as String
-            val city = values[2] as String?
-            val wifi = values[3] as Int
-            val seat = values[4] as Int
-            val quiet = values[5] as Int
-            val tasty = values[6] as Int
-            val cheap = values[7] as Int
-            val music = values[8] as Int
-
+            _appliedFilters,
+        ) { cafes, query, filters ->
             cafes.filter { cafe ->
-                val matchesSearch = cafe.name.contains(q, ignoreCase = true)
-                val matchesCity = (city.isNullOrEmpty() || cafe.city == city)
-                val matchesWifi = cafe.wifi >= wifi
-                val matchesSeat = cafe.seat >= seat
-                val matchesQuiet = cafe.quiet >= quiet
-                val matchesTasty = cafe.tasty >= tasty
-                val matchesCheap = cafe.cheap >= cheap
-                val matchesMusic = cafe.music >= music
+                val matchesSearch = cafe.name.contains(query, ignoreCase = true)
+                val matchesCity = (filters.city.isNullOrEmpty() || cafe.city == filters.city)
+                val matchesWifi = cafe.wifi >= filters.wifi
+                val matchesSeat = cafe.seat >= filters.seat
+                val matchesQuiet = cafe.quiet >= filters.quiet
+                val matchesTasty = cafe.tasty >= filters.tasty
+                val matchesCheap = cafe.cheap >= filters.cheap
+                val matchesMusic = cafe.music >= filters.music
 
                 matchesSearch && matchesCity && matchesWifi && matchesSeat && matchesQuiet && matchesTasty && matchesCheap && matchesMusic
             }

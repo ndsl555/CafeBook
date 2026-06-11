@@ -217,6 +217,7 @@ class SearchFragment : Fragment() {
 
                     // 篩選按鈕
                     binding.buttonApply.setOnClickListener {
+                        viewModel.applyFilters()
                         binding.drawerLayout.closeDrawers()
                     }
 
