@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -103,19 +104,21 @@ fun GenericFilterDrawerContent(
             "lienchiang" to "連江",
         )
 
-    var expanded by remember { mutableStateOf(false) }
+    var expanded by rememberSaveable { mutableStateOf(false) }
     val allLabel = stringResource(R.string.all)
 
     // 內部狀態，只在按下「應用」時才回傳
-    var selectedCityCode by remember { mutableStateOf(initialCity) }
-    var selectedCityName by remember { mutableStateOf(if (initialCity == null) allLabel else (cityNameMap[initialCity] ?: initialCity)) }
+    var selectedCityCode by rememberSaveable { mutableStateOf(initialCity) }
+    var selectedCityName by rememberSaveable {
+        mutableStateOf(if (initialCity == null) allLabel else (cityNameMap[initialCity] ?: initialCity))
+    }
 
-    var wifi by remember { mutableFloatStateOf(initialWifi.toFloat()) }
-    var seat by remember { mutableFloatStateOf(initialSeat.toFloat()) }
-    var quiet by remember { mutableFloatStateOf(initialQuiet.toFloat()) }
-    var tasty by remember { mutableFloatStateOf(initialTasty.toFloat()) }
-    var cheap by remember { mutableFloatStateOf(initialCheap.toFloat()) }
-    var music by remember { mutableFloatStateOf(initialMusic.toFloat()) }
+    var wifi by rememberSaveable { mutableFloatStateOf(initialWifi.toFloat()) }
+    var seat by rememberSaveable { mutableFloatStateOf(initialSeat.toFloat()) }
+    var quiet by rememberSaveable { mutableFloatStateOf(initialQuiet.toFloat()) }
+    var tasty by rememberSaveable { mutableFloatStateOf(initialTasty.toFloat()) }
+    var cheap by rememberSaveable { mutableFloatStateOf(initialCheap.toFloat()) }
+    var music by rememberSaveable { mutableFloatStateOf(initialMusic.toFloat()) }
 
     Column(
         modifier =

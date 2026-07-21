@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +31,7 @@ fun NearScreen(viewModel: NearViewModel = koinViewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val distanceLimit by viewModel.distanceLimit.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    var selectedCafe by remember { mutableStateOf<CafeShopEntity?>(null) }
+    var selectedCafe by rememberSaveable { mutableStateOf<CafeShopEntity?>(null) }
     val mapView = remember { MapView(context) }
     var googleMap by remember { mutableStateOf<GoogleMap?>(null) }
 

@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -44,8 +45,8 @@ fun PocketScreen(viewModel: PocketViewModel = koinViewModel()) {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
-    var selectedCafe by remember { mutableStateOf<CafeShopEntity?>(null) }
-    var showDeleteConfirm by remember { mutableStateOf(false) }
+    var selectedCafe by rememberSaveable { mutableStateOf<CafeShopEntity?>(null) }
+    var showDeleteConfirm by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         viewModel.getuniCity()

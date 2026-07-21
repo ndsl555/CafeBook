@@ -13,6 +13,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,8 +57,8 @@ fun BarcodeContent(viewModel: BarcodeViewModel = koinViewModel()) {
 
     val barcodeBitmap by viewModel.barcodeBitmap.observeAsState()
     val barcodeText by viewModel.barcodeText.observeAsState("")
-    var showInputDialog by remember { mutableStateOf(false) }
-    var isLightOn by remember { mutableStateOf(false) }
+    var showInputDialog by rememberSaveable { mutableStateOf(false) }
+    var isLightOn by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(isLightOn) {
         activity?.window?.let { window ->
@@ -162,7 +163,7 @@ fun BarcodeInputDialog(
     onDismiss: () -> Unit,
     onConfirm: (String) -> Unit,
 ) {
-    var textFieldValue by remember { mutableStateOf(TextFieldValue("")) }
+    var textFieldValue by rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue("")) }
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.enter_barcode_hint)) },
